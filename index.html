@@ -1,0 +1,1054 @@
+Aura Skin & Beauty — E-Commerce Catalog Code Implementation
+This technical reference contains the standalone HTML5 production code for the Aura Skin & Beauty dynamic catalog. The implementation utilizes Tailwind CSS via CDN for streamlined responsive layout and Lucide Icons for vector UI components.
+Technical Summary
+Parameter
+Specification
+Framework
+Native HTML5 / Tailwind CSS (v3 CDN)
+Icons
+Lucide Icons (v0.292.0 CDN)
+Typography
+Playfair Display (Serif Headings), Plus Jakarta Sans (Sans Body)
+Color Palette
+Soft Rose (#FDFBF7, #F4EAE1), Deep Bronze (#4A3E3D, #2C2221)
+Interactive Components
+Fixed Navbar, Mobile Navigation Drawer, Dynamic Category Cards, Product Grid, Floating Action Button (FAB)
+
+Complete Production Code (index.html)
+<!DOCTYPE html>
+
+<html lang="es" class="scroll-smooth">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Aura Skin & Beauty | Catálogo Oficial</title>
+
+  
+
+  <!-- Fonts -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  
+
+  <!-- Tailwind CSS CDN -->
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+
+    tailwind.config = {
+
+      theme: {
+
+        extend: {
+
+          colors: {
+
+            aura: {
+
+              50: '#FDFBF7',
+
+              100: '#F7F0E8',
+
+              200: '#EBDCD0',
+
+              300: '#DCBFAC',
+
+              400: '#C99E85',
+
+              500: '#B88268',
+
+              800: '#4A3E3D',
+
+              900: '#2C2221',
+
+            },
+
+            whatsapp: {
+
+              light: '#25D366',
+
+              dark: '#128C7E',
+
+              hover: '#075E54'
+
+            }
+
+          },
+
+          fontFamily: {
+
+            serif: ['Playfair Display', 'serif'],
+
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+
+          }
+
+        }
+
+      }
+
+    }
+
+  </script>
+
+  <!-- Lucide Icons -->
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+
+<body class="bg-aura-50 text-aura-900 font-sans antialiased selection:bg-aura-200 selection:text-aura-900">
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+
+  <div class="bg-aura-900 text-aura-100 text-xs py-2 px-4 text-center tracking-wide flex items-center justify-center gap-2">
+
+    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-300"></i>
+
+    <span>Envíos gratis por compras superiores a $150.000 COP a todo Colombia</span>
+
+  </div>
+
+  <!-- NAVIGATION BAR -->
+
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-aura-100 transition-all">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="flex items-center justify-between h-20">
+
+        
+
+        <!-- Brand Logo -->
+
+        <a href="#" class="flex items-center gap-2 group">
+
+          <div class="w-10 h-10 rounded-full bg-aura-100 flex items-center justify-center group-hover:bg-aura-200 transition-colors">
+
+            <i data-lucide="flower-2" class="w-6 h-6 text-aura-500"></i>
+
+          </div>
+
+          <div class="flex flex-col">
+
+            <span class="font-serif text-2xl font-bold tracking-tight text-aura-900 leading-none">AURA</span>
+
+            <span class="text-[9px] tracking-[0.25em] uppercase text-aura-500 font-semibold mt-1">Skin & Beauty</span>
+
+          </div>
+
+        </a>
+
+        <!-- Desktop Navigation Links -->
+
+        <nav class="hidden md:flex items-center gap-8">
+
+          <a href="#inicio" class="text-sm font-medium hover:text-aura-500 transition-colors">Inicio</a>
+
+          <a href="#categorias" class="text-sm font-medium hover:text-aura-500 transition-colors">Categorías</a>
+
+          <a href="#catalogo" class="text-sm font-medium hover:text-aura-500 transition-colors">Catálogo</a>
+
+          <a href="#nosotros" class="text-sm font-medium hover:text-aura-500 transition-colors">Beneficios</a>
+
+          <a href="#testimonios" class="text-sm font-medium hover:text-aura-500 transition-colors">Testimonios</a>
+
+        </nav>
+
+        <!-- Header CTA Actions -->
+
+        <div class="hidden sm:flex items-center gap-4">
+
+          <a href="https://wa.me/573000000000?text=Hola%20Aura%20Skin%20%26%20Beauty,%20quisiera%20recibir%20asesor%C3%ADa%20personalizada" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-whatsapp-light text-white text-xs font-semibold hover:bg-whatsapp-dark transition-all shadow-sm hover:shadow">
+
+            <i data-lucide="message-circle" class="w-4 h-4"></i>
+
+            <span>Asesoría Directa</span>
+
+          </a>
+
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-aura-800 hover:bg-aura-100 transition-colors" aria-label="Abrir Menú">
+
+          <i data-lucide="menu" class="w-6 h-6"></i>
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+
+    <div id="mobile-menu" class="hidden md:hidden border-t border-aura-100 bg-white px-4 pt-3 pb-6 space-y-3">
+
+      <a href="#inicio" class="block px-3 py-2 rounded-md text-base font-medium text-aura-800 hover:bg-aura-50">Inicio</a>
+
+      <a href="#categorias" class="block px-3 py-2 rounded-md text-base font-medium text-aura-800 hover:bg-aura-50">Categorías</a>
+
+      <a href="#catalogo" class="block px-3 py-2 rounded-md text-base font-medium text-aura-800 hover:bg-aura-50">Catálogo</a>
+
+      <a href="#nosotros" class="block px-3 py-2 rounded-md text-base font-medium text-aura-800 hover:bg-aura-50">Beneficios</a>
+
+      <a href="#testimonios" class="block px-3 py-2 rounded-md text-base font-medium text-aura-800 hover:bg-aura-50">Testimonios</a>
+
+      <div class="pt-2">
+
+        <a href="https://wa.me/573000000000?text=Hola%20Aura%20Skin%20%26%20Beauty,%20quisiera%20consultar%20el%20cat%C3%A1logo" target="_blank" class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-whatsapp-light text-white font-medium text-sm">
+
+          <i data-lucide="message-circle" class="w-5 h-5"></i>
+
+          <span>Escribir a WhatsApp</span>
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <!-- HERO SECTION -->
+
+  <section id="inicio" class="relative min-h-[85vh] flex items-center justify-center bg-aura-100 overflow-hidden py-16 lg:py-24">
+
+    <!-- Background Decoration -->
+
+    <div class="absolute inset-0 z-0 opacity-40">
+
+      <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=2000&q=80" alt="Aura Background" class="w-full h-full object-cover">
+
+      <div class="absolute inset-0 bg-gradient-to-r from-aura-50 via-aura-50/80 to-transparent"></div>
+
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+        
+
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur border border-aura-200 text-aura-800 text-xs font-semibold tracking-wider uppercase">
+
+            <i data-lucide="sparkle" class="w-3.5 h-3.5 text-aura-500"></i>
+
+            <span>Cosmética Orgánica & Cuidado Personal</span>
+
+          </div>
+
+          <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-aura-900 leading-tight">
+
+            Resalta tu belleza <br class="hidden sm:inline"/><span class="italic font-normal text-aura-500">natural y radiante</span>
+
+          </h1>
+
+          <p class="text-base sm:text-lg text-aura-800/80 max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed">
+
+            Fórmulas de alta calidad diseñadas para nutrir, proteger y rejuvenecer tu piel y cabello. Descubre el equilibrio perfecto entre botánica activa y ciencia cosmética.
+
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+
+            <a href="#catalogo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-aura-900 text-white font-semibold text-sm hover:bg-aura-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+
+              <span>Explorar Catálogo</span>
+
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+
+            </a>
+
+            <a href="https://wa.me/573000000000?text=Hola!%20Me%20gustar%C3%ADa%20hacer%20un%20pedido" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-white text-aura-900 border border-aura-200 font-semibold text-sm hover:bg-aura-50 transition-all shadow-sm hover:shadow">
+
+              <i data-lucide="shopping-bag" class="w-4 h-4 text-whatsapp-light"></i>
+
+              <span>Pedir por WhatsApp</span>
+
+            </a>
+
+          </div>
+
+          <!-- Social Proof Quick Badge -->
+
+          <div class="pt-6 flex items-center justify-center lg:justify-start gap-4 text-xs text-aura-800/70 border-t border-aura-200/60 max-w-md mx-auto lg:mx-0">
+
+            <div class="flex -space-x-2">
+
+              <img class="w-8 h-8 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Cliente">
+
+              <img class="w-8 h-8 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=100&q=80" alt="Cliente">
+
+              <img class="w-8 h-8 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80" alt="Cliente">
+
+            </div>
+
+            <div>
+
+              <div class="flex items-center text-amber-500">
+
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+
+                <span class="ml-1 font-bold text-aura-900">4.9/5</span>
+
+              </div>
+
+              <span>Más de 1,200 clientes satisfechas</span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Hero Image Presentation -->
+
+        <div class="lg:col-span-5 relative">
+
+          <div class="relative mx-auto max-w-md lg:max-w-none">
+
+            <div class="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
+
+              <img src="https://images.unsplash.com/photo-1608248597260-8f9215011707?auto=format&fit=crop&w=800&q=80" alt="Aura Beauty Products" class="w-full h-full object-cover">
+
+            </div>
+
+            
+
+            <!-- Floating Badge Card -->
+
+            <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl border border-aura-100 hidden sm:flex items-center gap-3 max-w-xs">
+
+              <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+
+                <i data-lucide="shield-check" class="w-5 h-5"></i>
+
+              </div>
+
+              <div>
+
+                <p class="text-xs font-bold text-aura-900">Dermatológicamente Probado</p>
+
+                <p class="text-[11px] text-gray-500">Libre de crueldad & parabenos</p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- VALUE PROPOSITION BADGES -->
+
+  <section id="nosotros" class="py-12 bg-white border-y border-aura-100">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        
+
+        <div class="flex items-center gap-4 p-4 rounded-2xl bg-aura-50 border border-aura-100/80">
+
+          <div class="w-12 h-12 rounded-xl bg-aura-200/60 flex items-center justify-center text-aura-800 shrink-0">
+
+            <i data-lucide="truck" class="w-6 h-6"></i>
+
+          </div>
+
+          <div>
+
+            <h3 class="font-bold text-sm text-aura-900">Envíos Nacionales</h3>
+
+            <p class="text-xs text-aura-800/70 mt-0.5">Entregas seguras a toda Colombia entre 2 y 4 días hábiles.</p>
+
+          </div>
+
+        </div>
+
+        <div class="flex items-center gap-4 p-4 rounded-2xl bg-aura-50 border border-aura-100/80">
+
+          <div class="w-12 h-12 rounded-xl bg-whatsapp-light/10 flex items-center justify-center text-whatsapp-light shrink-0">
+
+            <i data-lucide="message-square" class="w-6 h-6"></i>
+
+          </div>
+
+          <div>
+
+            <h3 class="font-bold text-sm text-aura-900">Pedido Directo a WhatsApp</h3>
+
+            <p class="text-xs text-aura-800/70 mt-0.5">Atención personalizada y compra inmediata sin registros molestos.</p>
+
+          </div>
+
+        </div>
+
+        <div class="flex items-center gap-4 p-4 rounded-2xl bg-aura-50 border border-aura-100/80">
+
+          <div class="w-12 h-12 rounded-xl bg-aura-200/60 flex items-center justify-center text-aura-800 shrink-0">
+
+            <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+
+          </div>
+
+          <div>
+
+            <h3 class="font-bold text-sm text-aura-900">Asesoría Personalizada</h3>
+
+            <p class="text-xs text-aura-800/70 mt-0.5">Te guiamos para elegir la rutina perfecta según tu tipo de piel.</p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- CATEGORIES SECTION -->
+
+  <section id="categorias" class="py-16 sm:py-24 bg-aura-50">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      
+
+      <div class="text-center max-w-2xl mx-auto mb-12">
+
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-aura-900">Nuestras Líneas de Cuidado</h2>
+
+        <p class="text-sm sm:text-base text-aura-800/70 mt-2">Explora nuestras colecciones especializadas para cada necesidad específica</p>
+
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        
+
+        <!-- Category 1 -->
+
+        <a href="#catalogo" class="group relative rounded-2xl overflow-hidden shadow-md aspect-[3/4] block">
+
+          <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80" alt="Cuidado Capilar" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+
+          <div class="absolute inset-0 bg-gradient-to-t from-aura-900/90 via-aura-900/30 to-transparent"></div>
+
+          <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+
+            <span class="text-xs uppercase tracking-widest text-aura-300 font-semibold">Tratamientos</span>
+
+            <h3 class="font-serif text-xl font-bold mt-1">Cuidado Capilar</h3>
+
+            <p class="text-xs text-aura-100/80 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Restauración y brillo intensivo</p>
+
+          </div>
+
+        </a>
+
+        <!-- Category 2 -->
+
+        <a href="#catalogo" class="group relative rounded-2xl overflow-hidden shadow-md aspect-[3/4] block">
+
+          <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80" alt="Skincare Facial" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+
+          <div class="absolute inset-0 bg-gradient-to-t from-aura-900/90 via-aura-900/30 to-transparent"></div>
+
+          <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+
+            <span class="text-xs uppercase tracking-widest text-aura-300 font-semibold">Rostro</span>
+
+            <h3 class="font-serif text-xl font-bold mt-1">Skincare</h3>
+
+            <p class="text-xs text-aura-100/80 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Hidratación y luminosidad facial</p>
+
+          </div>
+
+        </a>
+
+        <!-- Category 3 -->
+
+        <a href="#catalogo" class="group relative rounded-2xl overflow-hidden shadow-md aspect-[3/4] block">
+
+          <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=600&q=80" alt="Lociones & Fragancias" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+
+          <div class="absolute inset-0 bg-gradient-to-t from-aura-900/90 via-aura-900/30 to-transparent"></div>
+
+          <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+
+            <span class="text-xs uppercase tracking-widest text-aura-300 font-semibold">Perfumería</span>
+
+            <h3 class="font-serif text-xl font-bold mt-1">Lociones & Fragancias</h3>
+
+            <p class="text-xs text-aura-100/80 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Esencias únicas de larga duración</p>
+
+          </div>
+
+        </a>
+
+        <!-- Category 4 -->
+
+        <a href="#catalogo" class="group relative rounded-2xl overflow-hidden shadow-md aspect-[3/4] block">
+
+          <img src="https://images.unsplash.com/photo-1621607512214-68297480165e?auto=format&fit=crop&w=600&q=80" alt="Línea Masculina" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+
+          <div class="absolute inset-0 bg-gradient-to-t from-aura-900/90 via-aura-900/30 to-transparent"></div>
+
+          <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+
+            <span class="text-xs uppercase tracking-widest text-aura-300 font-semibold">Men Care</span>
+
+            <h3 class="font-serif text-xl font-bold mt-1">Línea Masculina</h3>
+
+            <p class="text-xs text-aura-100/80 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Cuidado especializado para barba y piel</p>
+
+          </div>
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FEATURED CATALOG GRID -->
+
+  <section id="catalogo" class="py-16 sm:py-24 bg-white">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      
+
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+
+        <div>
+
+          <span class="text-xs uppercase tracking-widest text-aura-500 font-semibold">Catálogo Destacado</span>
+
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-aura-900 mt-1">Productos Estrella</h2>
+
+        </div>
+
+        <p class="text-sm text-aura-800/70 mt-2 md:mt-0 max-w-md">Haz clic en cualquier producto para realizar tu pedido directo por WhatsApp de forma rápida y sencilla.</p>
+
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+        
+
+        <!-- Product 1 -->
+
+        <div class="group flex flex-col bg-aura-50 rounded-2xl overflow-hidden border border-aura-100/80 hover:shadow-xl transition-all duration-300">
+
+          <div class="relative aspect-square overflow-hidden bg-white">
+
+            <img src="https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=600&q=80" alt="Tratamiento Reparador Capilar Intensivo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+
+            <span class="absolute top-3 left-3 bg-aura-900 text-white text-[10px] uppercase font-bold px-2.5 py-1 rounded-full tracking-wider">Top Ventas</span>
+
+          </div>
+
+          <div class="p-5 flex flex-col flex-grow">
+
+            <span class="text-[11px] text-aura-500 font-semibold uppercase tracking-wider">Cuidado Capilar</span>
+
+            <h3 class="font-serif text-base font-bold text-aura-900 mt-1 line-clamp-2">Tratamiento Reparador Capilar Intensivo (250ml)</h3>
+
+            <p class="text-xs text-aura-800/70 mt-2 line-clamp-2 flex-grow">Restaura la hebra capilar maltratada por procesos químicos. Aporta brillo extremo y sedosidad desde la primera aplicación.</p>
+
+            <div class="mt-4 pt-4 border-t border-aura-200/60 flex items-center justify-between">
+
+              <div>
+
+                <span class="text-xs text-gray-400 block">Precio</span>
+
+                <span class="text-lg font-bold text-aura-900">$65.000 COP</span>
+
+              </div>
+
+              <a href="https://wa.me/573000000000?text=Hola%20Aura%20Skin%20%26%20Beauty,%20quiero%20comprar%20el%20Tratamiento%20Reparador%20Capilar%20Intensivo%20(250ml)%20por%20$65.000%20COP" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center p-3 rounded-full bg-whatsapp-light text-white hover:bg-whatsapp-dark transition-colors shadow-sm" title="Pedir por WhatsApp">
+
+                <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Product 2 -->
+
+        <div class="group flex flex-col bg-aura-50 rounded-2xl overflow-hidden border border-aura-100/80 hover:shadow-xl transition-all duration-300">
+
+          <div class="relative aspect-square overflow-hidden bg-white">
+
+            <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80" alt="Sérum Facial Hidratante Ácido Hialurónico" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+
+            <span class="absolute top-3 left-3 bg-aura-500 text-white text-[10px] uppercase font-bold px-2.5 py-1 rounded-full tracking-wider">Recomendado</span>
+
+          </div>
+
+          <div class="p-5 flex flex-col flex-grow">
+
+            <span class="text-[11px] text-aura-500 font-semibold uppercase tracking-wider">Skincare Facial</span>
+
+            <h3 class="font-serif text-base font-bold text-aura-900 mt-1 line-clamp-2">Sérum Facial Hidratante Ácido Hialurónico (50ml)</h3>
+
+            <p class="text-xs text-aura-800/70 mt-2 line-clamp-2 flex-grow">Fórmula concentrada de triple peso molecular. Retiene la humedad, rellena líneas de expresión y mejora la elasticidad.</p>
+
+            <div class="mt-4 pt-4 border-t border-aura-200/60 flex items-center justify-between">
+
+              <div>
+
+                <span class="text-xs text-gray-400 block">Precio</span>
+
+                <span class="text-lg font-bold text-aura-900">$78.000 COP</span>
+
+              </div>
+
+              <a href="https://wa.me/573000000000?text=Hola%20Aura%20Skin%20%26%20Beauty,%20quiero%20comprar%20el%20S%C3%A9rum%20Facial%20Hidratante%20%C3%81cido%20Hialur%C3%B3nico%20(50ml)%20por%20$78.000%20COP" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center p-3 rounded-full bg-whatsapp-light text-white hover:bg-whatsapp-dark transition-colors shadow-sm" title="Pedir por WhatsApp">
+
+                <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Product 3 -->
+
+        <div class="group flex flex-col bg-aura-50 rounded-2xl overflow-hidden border border-aura-100/80 hover:shadow-xl transition-all duration-300">
+
+          <div class="relative aspect-square overflow-hidden bg-white">
+
+            <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=600&q=80" alt="Eau de Parfum Flora Luxe" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+
+          </div>
+
+          <div class="p-5 flex flex-col flex-grow">
+
+            <span class="text-[11px] text-aura-500 font-semibold uppercase tracking-wider">Lociones & Fragancias</span>
+
+            <h3 class="font-serif text-base font-bold text-aura-900 mt-1 line-clamp-2">Eau de Parfum Flora Luxe (100ml)</h3>
+
+            <p class="text-xs text-aura-800/70 mt-2 line-clamp-2 flex-grow">Notas florales elegantes con toques de jazmín, peonía y fondo amaderado dulce. Alta fijación durante todo el día.</p>
+
+            <div class="mt-4 pt-4 border-t border-aura-200/60 flex items-center justify-between">
+
+              <div>
+
+                <span class="text-xs text-gray-400 block">Precio</span>
+
+                <span class="text-lg font-bold text-aura-900">$95.000 COP</span>
+
+              </div>
+
+              <a href="https://wa.me/573000000000?text=Hola%20Aura%20Skin%20%26%20Beauty,%20quiero%20comprar%20el%20Eau%20de%20Parfum%20Flora%20Luxe%20(100ml)%20por%20$95.000%20COP" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center p-3 rounded-full bg-whatsapp-light text-white hover:bg-whatsapp-dark transition-colors shadow-sm" title="Pedir por WhatsApp">
+
+                <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Product 4 -->
+
+        <div class="group flex flex-col bg-aura-50 rounded-2xl overflow-hidden border border-aura-100/80 hover:shadow-xl transition-all duration-300">
+
+          <div class="relative aspect-square overflow-hidden bg-white">
+
+            <img src="https://images.unsplash.com/photo-1626285861696-9f0bf5a49c6d?auto=format&fit=crop&w=600&q=80" alt="Bálsamo Multifuncional Rostro & Barba" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+
+          </div>
+
+          <div class="p-5 flex flex-col flex-grow">
+
+            <span class="text-[11px] text-aura-500 font-semibold uppercase tracking-wider">Línea Masculina</span>
+
+            <h3 class="font-serif text-base font-bold text-aura-900 mt-1 line-clamp-2">Bálsamo Multifuncional Rostro & Barba (100ml)</h3>
+
+            <p class="text-xs text-aura-800/70 mt-2 line-clamp-2 flex-grow">Nutre la barba y calma la piel tras el afeitado. Textura ligera de rápida absorción sin sensación grasosa.</p>
+
+            <div class="mt-4 pt-4 border-t border-aura-200/60 flex items-center justify-between">
+
+              <div>
+
+                <span class="text-xs text-gray-400 block">Precio</span>
+
+                <span class="text-lg font-bold text-aura-900">$58.000 COP</span>
+
+              </div>
+
+              <a href="https://wa.me/573000000000?text=Hola%20Aura%20Skin%20%26%20Beauty,%20quiero%20comprar%20el%20B%C3%A1lsamo%20Multifuncional%20Rostro%20%26%20Barba%20(100ml)%20por%20$58.000%20COP" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center p-3 rounded-full bg-whatsapp-light text-white hover:bg-whatsapp-dark transition-colors shadow-sm" title="Pedir por WhatsApp">
+
+                <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- TESTIMONIALS SECTION -->
+
+  <section id="testimonios" class="py-16 sm:py-24 bg-aura-100/60">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      
+
+      <div class="text-center max-w-2xl mx-auto mb-12">
+
+        <span class="text-xs uppercase tracking-widest text-aura-500 font-semibold">Testimonios Realmente Auténticos</span>
+
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-aura-900 mt-1">Lo que dicen nuestras clientas</h2>
+
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        
+
+        <!-- Testimonial 1 -->
+
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-aura-200/60 flex flex-col justify-between">
+
+          <div>
+
+            <div class="flex text-amber-400 mb-3">
+
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+
+            </div>
+
+            <p class="text-xs text-aura-800 leading-relaxed italic">"El sérum hidratante cambió completamente mi rutina. Tenía la piel muy seca y opaca, y a los 3 días de uso noté una diferencia increíble. ¡Atención por WhatsApp de 10!"</p>
+
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-aura-100 flex items-center gap-3">
+
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Valeria M." class="w-10 h-10 rounded-full object-cover">
+
+            <div>
+
+              <h4 class="text-xs font-bold text-aura-900">Valeria Martínez</h4>
+
+              <span class="text-[11px] text-gray-400">Bogotá, D.C.</span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Testimonial 2 -->
+
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-aura-200/60 flex flex-col justify-between">
+
+          <div>
+
+            <div class="flex text-amber-400 mb-3">
+
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+
+            </div>
+
+            <p class="text-xs text-aura-800 leading-relaxed italic">"Compré el tratamiento para el cabello porque lo tenía muy maltratado por la decoloración. Es milagroso, me dejó el pelo suave y súper brillante. El envío llegó al día siguiente."</p>
+
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-aura-100 flex items-center gap-3">
+
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80" alt="Camila R." class="w-10 h-10 rounded-full object-cover">
+
+            <div>
+
+              <h4 class="text-xs font-bold text-aura-900">Camila Rodríguez</h4>
+
+              <span class="text-[11px] text-gray-400">Medellín</span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Testimonial 3 -->
+
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-aura-200/60 flex flex-col justify-between">
+
+          <div>
+
+            <div class="flex text-amber-400 mb-3">
+
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+
+              <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+
+            </div>
+
+            <p class="text-xs text-aura-800 leading-relaxed italic">"Excelente opción para hacer un regalo especial. La loción Flora Luxe huele delicioso y el empaque venía hermoso. Súper recomendados."</p>
+
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-aura-100 flex items-center gap-3">
+
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80" alt="Sofía G." class="w-10 h-10 rounded-full object-cover">
+
+            <div>
+
+              <h4 class="text-xs font-bold text-aura-900">Sofía Gómez</h4>
+
+              <span class="text-[11px] text-gray-400">Cali</span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+
+  <footer class="bg-aura-900 text-aura-100 pt-16 pb-8 border-t border-aura-800">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-aura-800">
+
+        
+
+        <!-- Brand Summary -->
+
+        <div class="md:col-span-5 space-y-4">
+
+          <div class="flex items-center gap-2">
+
+            <div class="w-8 h-8 rounded-full bg-aura-800 flex items-center justify-center">
+
+              <i data-lucide="flower-2" class="w-5 h-5 text-aura-300"></i>
+
+            </div>
+
+            <span class="font-serif text-xl font-bold tracking-tight text-white">AURA</span>
+
+          </div>
+
+          <p class="text-xs text-aura-300/80 max-w-sm leading-relaxed">
+
+            Aura Skin & Beauty ofrece productos de cosmética consciente y cuidado personal elaborados con extractos naturales de alta calidad para potenciar tu belleza real.
+
+          </p>
+
+          <div class="flex items-center gap-3 pt-2">
+
+            <a href="#" class="w-8 h-8 rounded-full bg-aura-800 flex items-center justify-center text-aura-300 hover:bg-aura-500 hover:text-white transition-colors">
+
+              <i data-lucide="instagram" class="w-4 h-4"></i>
+
+            </a>
+
+            <a href="#" class="w-8 h-8 rounded-full bg-aura-800 flex items-center justify-center text-aura-300 hover:bg-aura-500 hover:text-white transition-colors">
+
+              <i data-lucide="facebook" class="w-4 h-4"></i>
+
+            </a>
+
+            <a href="https://wa.me/573000000000" target="_blank" class="w-8 h-8 rounded-full bg-aura-800 flex items-center justify-center text-aura-300 hover:bg-whatsapp-light hover:text-white transition-colors">
+
+              <i data-lucide="message-circle" class="w-4 h-4"></i>
+
+            </a>
+
+          </div>
+
+        </div>
+
+        <!-- Links Navigation -->
+
+        <div class="md:col-span-3 space-y-3">
+
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white">Navegación</h4>
+
+          <ul class="space-y-2 text-xs text-aura-300/80">
+
+            <li><a href="#inicio" class="hover:text-white transition-colors">Inicio</a></li>
+
+            <li><a href="#categorias" class="hover:text-white transition-colors">Categorías</a></li>
+
+            <li><a href="#catalogo" class="hover:text-white transition-colors">Catálogo Completo</a></li>
+
+            <li><a href="#nosotros" class="hover:text-white transition-colors">Beneficios</a></li>
+
+          </ul>
+
+        </div>
+
+        <!-- Direct Contact -->
+
+        <div class="md:col-span-4 space-y-3">
+
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white">Atención al Cliente</h4>
+
+          <ul class="space-y-2 text-xs text-aura-300/80">
+
+            <li class="flex items-center gap-2">
+
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-aura-500"></i>
+
+              <span>Colombia — Envíos a todo el país</span>
+
+            </li>
+
+            <li class="flex items-center gap-2">
+
+              <i data-lucide="phone" class="w-3.5 h-3.5 text-aura-500"></i>
+
+              <span>+57 300 000 0000</span>
+
+            </li>
+
+            <li class="flex items-center gap-2">
+
+              <i data-lucide="clock" class="w-3.5 h-3.5 text-aura-500"></i>
+
+              <span>Lun - Sáb: 8:00 AM - 7:00 PM</span>
+
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+      <!-- Credits and Copyright -->
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-aura-300/60 gap-4">
+
+        <p>© 2024 Aura Skin & Beauty. Todos los derechos reservados.</p>
+
+        <p class="flex items-center gap-1">
+
+          <span>Desarrollado por</span>
+
+          <span class="font-semibold text-aura-200">ADEN Digital</span>
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+  <!-- FLOATING WHATSAPP BUTTON -->
+
+  <a href="https://wa.me/573000000000?text=Hola%20Aura%20Skin%20%26%20Beauty,%20quisiera%20recibir%20informaci%C3%B3n%20sobre%20sus%20productos" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-50 bg-whatsapp-light text-white p-4 rounded-full shadow-2xl hover:bg-whatsapp-dark hover:scale-110 transition-all duration-300 flex items-center justify-center group" aria-label="Contacto WhatsApp">
+
+    <i data-lucide="message-circle" class="w-7 h-7"></i>
+
+    <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs group-hover:ml-2 transition-all duration-300 ease-in-out text-xs font-bold">¡Chatea con nosotros!</span>
+
+  </a>
+
+  <!-- Lucide Icons Initialization Script -->
+
+  <script>
+
+    lucide.createIcons();
+
+    // Mobile Menu Toggle Logic
+
+    const menuBtn = document.getElementById('mobile-menu-btn');
+
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuBtn.addEventListener('click', () => {
+
+      mobileMenu.classList.toggle('hidden');
+
+    });
+
+  </script>
+
+</body>
+
+</html>
